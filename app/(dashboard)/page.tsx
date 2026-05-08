@@ -34,7 +34,7 @@ export default async function PipelineDashboard() {
         </Link>
       </div>
 
-      <div className="rounded-lg border p-6 bg-white">
+      <div className="rounded-lg border p-6 bg-card">
         <CompositeChart
           assets={assetsWithComposite.map((a) => ({
             name: a.name,

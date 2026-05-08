@@ -9,9 +9,9 @@ export function CompositeBadge({
 }) {
   const color =
     score >= 7.0
-      ? "text-emerald-700 bg-emerald-50 border-emerald-200"
+      ? "text-afcen-green-700 bg-afcen-green-50 border-afcen-green-200"
       : score >= 5.5
-        ? "text-amber-700 bg-amber-50 border-amber-200"
+        ? "text-afcen-orange-700 bg-afcen-orange-50 border-afcen-orange-200"
         : "text-red-700 bg-red-50 border-red-200";
 
   return (

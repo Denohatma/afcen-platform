@@ -66,9 +66,9 @@ export function DocumentsSection({
               </div>
               <div className="text-xs">
                 {doc.extractedText ? (
-                  <span className="text-emerald-600">Extracted</span>
+                  <span className="text-afcen-green-600">Extracted</span>
                 ) : (
-                  <span className="text-amber-600">Pending extraction</span>
+                  <span className="text-afcen-orange-600">Pending extraction</span>
                 )}
               </div>
             </li>

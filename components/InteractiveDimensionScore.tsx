@@ -47,9 +47,9 @@ export function InteractiveDimensionScore({
   const weight = DEFAULT_WEIGHTS[dimension];
   const barColor =
     score >= 7
-      ? "bg-emerald-500"
+      ? "bg-afcen-green-500"
       : score >= 4
-        ? "bg-amber-500"
+        ? "bg-afcen-orange-500"
         : "bg-red-500";
 
   const [editing, setEditing] = useState(false);
@@ -164,7 +164,7 @@ export function InteractiveDimensionScore({
           <div className="flex items-center gap-2">
             {confidence < 0.6 && (
               <span
-                className="text-amber-600 text-xs font-medium"
+                className="text-afcen-orange-600 text-xs font-medium"
                 title="Low confidence — under-evidenced"
               >
                 Low confidence
@@ -174,9 +174,9 @@ export function InteractiveDimensionScore({
               className={cn(
                 "text-2xl font-bold tabular-nums",
                 score >= 7
-                  ? "text-emerald-700"
+                  ? "text-afcen-green-700"
                   : score >= 4
-                    ? "text-amber-700"
+                    ? "text-afcen-orange-700"
                     : "text-red-700"
               )}
             >
@@ -326,9 +326,9 @@ export function InteractiveDimensionScore({
                     className={cn(
                       "text-lg font-bold",
                       aiSuggestion.score >= 7
-                        ? "text-emerald-700"
+                        ? "text-afcen-green-700"
                         : aiSuggestion.score >= 4
-                          ? "text-amber-700"
+                          ? "text-afcen-orange-700"
                           : "text-red-700"
                     )}
                   >

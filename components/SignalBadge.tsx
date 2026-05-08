@@ -2,8 +2,8 @@ import { cn } from "@/lib/utils";
 import type { Signal } from "@/lib/scoring/thresholds";
 
 const SIGNAL_STYLES: Record<Signal, string> = {
-  GO: "bg-emerald-100 text-emerald-800 border-emerald-300",
-  CONDITIONAL: "bg-amber-100 text-amber-800 border-amber-300",
+  GO: "bg-afcen-green-100 text-afcen-green-800 border-afcen-green-200",
+  CONDITIONAL: "bg-afcen-orange-100 text-afcen-orange-800 border-afcen-orange-200",
   NO_GO: "bg-red-100 text-red-800 border-red-300",
 };
 

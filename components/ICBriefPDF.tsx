@@ -16,13 +16,13 @@ const styles = StyleSheet.create({
   },
   header: {
     marginBottom: 20,
-    borderBottom: "2 solid #1a365d",
+    borderBottom: "2 solid #228B22",
     paddingBottom: 12,
   },
   title: {
     fontSize: 20,
     fontFamily: "Helvetica-Bold",
-    color: "#1a365d",
+    color: "#228B22",
     marginBottom: 4,
   },
   subtitle: {
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
   heading: {
     fontSize: 14,
     fontFamily: "Helvetica-Bold",
-    color: "#1a365d",
+    color: "#228B22",
     marginBottom: 6,
     marginTop: 12,
   },
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     right: 50,
     fontSize: 8,
     color: "#999",
-    borderTop: "1 solid #ddd",
+    borderTop: "1 solid #228B22",
     paddingTop: 8,
     flexDirection: "row",
     justifyContent: "space-between",

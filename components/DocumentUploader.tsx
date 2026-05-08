@@ -169,7 +169,7 @@ export function DocumentUploader({
 
       {/* Status messages */}
       {status === "done" && (
-        <p className="text-sm text-emerald-600">
+        <p className="text-sm text-afcen-green-600">
           Document uploaded and text extracted successfully.
         </p>
       )}

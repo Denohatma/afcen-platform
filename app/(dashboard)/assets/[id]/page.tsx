@@ -70,11 +70,11 @@ export default async function AssetDetailPage({
           </p>
         )}
         {asset.strategicContext && (
-          <div className="rounded-lg bg-blue-50 border border-blue-200 p-4 max-w-3xl">
-            <p className="text-xs font-medium text-blue-800 mb-1">
+          <div className="rounded-lg bg-afcen-blue-50 border border-afcen-blue-200 p-4 max-w-3xl">
+            <p className="text-xs font-medium text-afcen-blue-800 mb-1">
               Strategic Context
             </p>
-            <p className="text-sm text-blue-700 leading-relaxed">
+            <p className="text-sm text-afcen-blue-700 leading-relaxed">
               {asset.strategicContext}
             </p>
           </div>

@@ -31,7 +31,7 @@ export function PathToGo({ actions }: { actions: PathAction[] }) {
                     {DIMENSION_LABELS[action.affectsDimension]}
                   </Badge>
                   {action.scoreUplift > 0 && (
-                    <Badge className="text-xs bg-emerald-100 text-emerald-800 hover:bg-emerald-100">
+                    <Badge className="text-xs bg-afcen-green-100 text-afcen-green-800 hover:bg-afcen-green-100">
                       +{action.scoreUplift} pts
                     </Badge>
                   )}

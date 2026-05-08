@@ -68,7 +68,7 @@ export function ComparablesPanel({ assetId }: { assetId: string }) {
             <SignalBadge signal={c.signal} />
           </div>
           {c.sameSector && (
-            <p className="text-xs text-emerald-600">Same sector</p>
+            <p className="text-xs text-afcen-green-600">Same sector</p>
           )}
         </Link>
       ))}

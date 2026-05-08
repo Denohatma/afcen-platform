@@ -48,6 +48,31 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
+
+  --color-afcen-green-50: oklch(0.97 0.02 142.9);
+  --color-afcen-green-100: oklch(0.94 0.04 142.9);
+  --color-afcen-green-200: oklch(0.88 0.06 142.9);
+  --color-afcen-green-300: oklch(0.80 0.10 142.9);
+  --color-afcen-green-400: oklch(0.70 0.14 142.9);
+  --color-afcen-green-500: oklch(0.558 0.169 142.9);
+  --color-afcen-green-600: oklch(0.50 0.15 142.9);
+  --color-afcen-green-700: oklch(0.42 0.13 142.9);
+  --color-afcen-green-800: oklch(0.35 0.11 142.9);
+
+  --color-afcen-blue-50: oklch(0.97 0.015 231.6);
+  --color-afcen-blue-200: oklch(0.87 0.06 231.6);
+  --color-afcen-blue-500: oklch(0.755 0.153 231.6);
+  --color-afcen-blue-700: oklch(0.45 0.12 231.6);
+  --color-afcen-blue-800: oklch(0.38 0.10 231.6);
+
+  --color-afcen-orange-50: oklch(0.97 0.015 40.2);
+  --color-afcen-orange-100: oklch(0.93 0.04 40.2);
+  --color-afcen-orange-200: oklch(0.87 0.06 40.2);
+  --color-afcen-orange-400: oklch(0.78 0.14 40.2);
+  --color-afcen-orange-500: oklch(0.735 0.168 40.2);
+  --color-afcen-orange-600: oklch(0.60 0.15 40.2);
+  --color-afcen-orange-700: oklch(0.50 0.13 40.2);
+  --color-afcen-orange-800: oklch(0.40 0.11 40.2);
 }
 
 :root {

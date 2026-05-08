@@ -120,7 +120,7 @@ export default function NewAssetPage() {
                 step === s.num
                   ? "bg-primary text-primary-foreground"
                   : step > s.num
-                    ? "bg-emerald-100 text-emerald-700"
+                    ? "bg-afcen-green-100 text-afcen-green-700"
                     : "bg-muted text-muted-foreground"
               }`}
             >
@@ -366,11 +366,11 @@ export default function NewAssetPage() {
             </div>
             <p className="text-sm text-muted-foreground">{description}</p>
             {strategicContext && (
-              <div className="rounded-lg bg-blue-50 border border-blue-200 p-3">
-                <p className="text-xs font-medium text-blue-800 mb-1">
+              <div className="rounded-lg bg-afcen-blue-50 border border-afcen-blue-200 p-3">
+                <p className="text-xs font-medium text-afcen-blue-800 mb-1">
                   Strategic Context
                 </p>
-                <p className="text-sm text-blue-700">{strategicContext}</p>
+                <p className="text-sm text-afcen-blue-700">{strategicContext}</p>
               </div>
             )}
             {commissionedYear && (

@@ -20,9 +20,9 @@ export function CompositeChart({ assets }: { assets: ChartAsset[] }) {
           const pct = (asset.composite / maxScore) * 100;
           const color =
             asset.composite >= THRESHOLDS.GO
-              ? "bg-emerald-500"
+              ? "bg-afcen-green-500"
               : asset.composite >= THRESHOLDS.CONDITIONAL
-                ? "bg-amber-500"
+                ? "bg-afcen-orange-500"
                 : "bg-red-500";
 
           return (
@@ -33,12 +33,12 @@ export function CompositeChart({ assets }: { assets: ChartAsset[] }) {
               <div className="flex-1 relative h-7 bg-muted rounded overflow-hidden">
                 {/* Threshold lines */}
                 <div
-                  className="absolute top-0 bottom-0 w-px bg-amber-400 z-10"
+                  className="absolute top-0 bottom-0 w-px bg-afcen-orange-400 z-10"
                   style={{ left: `${(THRESHOLDS.CONDITIONAL / maxScore) * 100}%` }}
                   title={`Conditional: ${THRESHOLDS.CONDITIONAL}`}
                 />
                 <div
-                  className="absolute top-0 bottom-0 w-px bg-emerald-400 z-10"
+                  className="absolute top-0 bottom-0 w-px bg-afcen-green-400 z-10"
                   style={{ left: `${(THRESHOLDS.GO / maxScore) * 100}%` }}
                   title={`GO: ${THRESHOLDS.GO}`}
                 />
@@ -61,11 +61,11 @@ export function CompositeChart({ assets }: { assets: ChartAsset[] }) {
       </div>
       <div className="flex gap-4 text-xs text-muted-foreground pt-1">
         <span className="flex items-center gap-1">
-          <span className="w-3 h-0.5 bg-amber-400 inline-block" /> Conditional (
+          <span className="w-3 h-0.5 bg-afcen-orange-400 inline-block" /> Conditional (
           {THRESHOLDS.CONDITIONAL})
         </span>
         <span className="flex items-center gap-1">
-          <span className="w-3 h-0.5 bg-emerald-400 inline-block" /> GO (
+          <span className="w-3 h-0.5 bg-afcen-green-400 inline-block" /> GO (
           {THRESHOLDS.GO})
         </span>
       </div>
