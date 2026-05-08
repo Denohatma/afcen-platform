@@ -39,3 +39,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+/lib/generated/prisma
+
+# python sidecar
+python-sidecar/venv/
+__pycache__/
+*.pyc
