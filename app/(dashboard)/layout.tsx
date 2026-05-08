@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export default function DashboardLayout({
   children,
@@ -9,14 +10,18 @@ export default function DashboardLayout({
     <div className="min-h-screen bg-background">
       <header className="border-b bg-white sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-6 h-14 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
-              <span className="text-primary-foreground font-bold text-sm">
-                Af
-              </span>
-            </div>
+          <Link href="/" className="flex items-center gap-2.5">
+            <Image
+              src="/logo-icon.svg"
+              alt="AfCEN"
+              width={32}
+              height={32}
+              className="w-8 h-8"
+            />
             <div>
-              <span className="font-semibold text-sm">AfCEN</span>
+              <span className="font-heading font-bold text-sm tracking-tight">
+                AfCEN
+              </span>
               <span className="text-muted-foreground text-xs ml-1.5">
                 Asset Recycling
               </span>
@@ -25,7 +30,7 @@ export default function DashboardLayout({
           <nav className="flex items-center gap-4 text-sm">
             <Link
               href="/"
-              className="text-muted-foreground hover:text-foreground transition-colors"
+              className="text-muted-foreground hover:text-primary transition-colors"
             >
               Pipeline
             </Link>
