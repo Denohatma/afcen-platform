@@ -7,7 +7,7 @@ import { CompositeBadge } from "./CompositeBadge";
 import { SignalBadge } from "./SignalBadge";
 import { SECTOR_LABELS } from "@/lib/scoring/labels";
 import type { Signal } from "@/lib/scoring/thresholds";
-import type { Sector } from "@/lib/generated/prisma/client";
+import type { Sector } from "@prisma/client";
 
 interface Comparable {
   id: string;

@@ -5,7 +5,7 @@ import type {
   Dimension,
   DimensionScore,
   PathToGoAction,
-} from "@/lib/generated/prisma/client";
+} from "@prisma/client";
 
 export function extractAssetDataPrompt(documentText: string): LLMRequest {
   return {

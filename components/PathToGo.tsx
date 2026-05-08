@@ -1,6 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { DIMENSION_LABELS } from "@/lib/scoring/labels";
-import type { Dimension } from "@/lib/generated/prisma/client";
+import type { Dimension } from "@prisma/client";
 
 interface PathAction {
   id: string;

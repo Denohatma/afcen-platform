@@ -1,4 +1,4 @@
-import { Dimension } from "@/lib/generated/prisma/client";
+import { Dimension } from "@prisma/client";
 
 export const DEFAULT_WEIGHTS: Record<Dimension, number> = {
   REVENUE_MATURITY: 0.2,

@@ -6,7 +6,7 @@ import { CompositeBadge } from "./CompositeBadge";
 import { SignalBadge } from "./SignalBadge";
 import { computeComposite } from "@/lib/scoring/engine";
 import { signal } from "@/lib/scoring/thresholds";
-import type { Dimension } from "@/lib/generated/prisma/client";
+import type { Dimension } from "@prisma/client";
 
 export interface ScoreData {
   dimension: Dimension;

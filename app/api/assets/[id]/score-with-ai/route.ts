@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { getLLMAdapter } from "@/lib/llm/adapter";
 import { scoreDimensionPrompt } from "@/lib/llm/prompts";
-import type { Dimension } from "@/lib/generated/prisma/client";
+import type { Dimension } from "@prisma/client";
 import { z } from "zod";
 
 const VALID_DIMENSIONS: Dimension[] = [

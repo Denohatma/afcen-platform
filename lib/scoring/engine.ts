@@ -1,4 +1,4 @@
-import { Dimension } from "@/lib/generated/prisma/client";
+import { Dimension } from "@prisma/client";
 import { DEFAULT_WEIGHTS } from "./weights";
 
 export function computeComposite(

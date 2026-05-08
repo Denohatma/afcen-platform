@@ -2,7 +2,7 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { DIMENSION_LABELS } from "@/lib/scoring/labels";
 import { DEFAULT_WEIGHTS } from "@/lib/scoring/weights";
-import type { Dimension } from "@/lib/generated/prisma/client";
+import type { Dimension } from "@prisma/client";
 
 interface DimensionScoreProps {
   dimension: Dimension;

@@ -9,7 +9,7 @@ import {
   SUBCATEGORY_LABELS,
   COUNTRY_FLAGS,
 } from "@/lib/scoring/labels";
-import type { Sector, SubCategory } from "@/lib/generated/prisma/client";
+import type { Sector, SubCategory } from "@prisma/client";
 
 interface AssetCardProps {
   id: string;

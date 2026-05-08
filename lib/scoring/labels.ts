@@ -4,7 +4,7 @@ import {
   OwnershipType,
   SubCategory,
   AssetStatus,
-} from "@/lib/generated/prisma/client";
+} from "@prisma/client";
 
 export const DIMENSION_LABELS: Record<Dimension, string> = {
   REVENUE_MATURITY: "Revenue Maturity",

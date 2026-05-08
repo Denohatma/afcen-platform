@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { computeComposite } from "@/lib/scoring/engine";
 import { signal } from "@/lib/scoring/thresholds";
-import type { Dimension } from "@/lib/generated/prisma/client";
+import type { Dimension } from "@prisma/client";
 import { z } from "zod";
 
 const VALID_DIMENSIONS: Dimension[] = [

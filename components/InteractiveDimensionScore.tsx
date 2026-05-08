@@ -15,7 +15,7 @@ import { Slider } from "@/components/ui/slider";
 import { cn } from "@/lib/utils";
 import { DIMENSION_LABELS } from "@/lib/scoring/labels";
 import { DEFAULT_WEIGHTS } from "@/lib/scoring/weights";
-import type { Dimension } from "@/lib/generated/prisma/client";
+import type { Dimension } from "@prisma/client";
 import type { ScoreData } from "./Scorecard";
 
 interface Props {
