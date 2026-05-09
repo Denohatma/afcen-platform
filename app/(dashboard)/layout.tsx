@@ -29,7 +29,7 @@ export default function DashboardLayout({
           </Link>
           <nav className="flex items-center gap-4 text-sm">
             <Link
-              href="/"
+              href="/pipeline"
               className="text-muted-foreground hover:text-primary transition-colors"
             >
               Pipeline

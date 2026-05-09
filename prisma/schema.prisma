@@ -28,6 +28,7 @@ model Asset {
   documents   Document[]
   briefs      ICBrief[]
   pathActions PathToGoAction[]
+  studies     PreFeasibilityStudy[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -77,6 +78,27 @@ model ICBrief {
   content     String   @db.Text
   generatedAt DateTime @default(now())
   generatedBy String
+}
+
+model PreFeasibilityStudy {
+  id           String      @id @default(cuid())
+  asset        Asset       @relation(fields: [assetId], references: [id])
+  assetId      String
+  status       StudyStatus @default(RUNNING)
+  agentOutputs Json?
+  document     String?     @db.Text
+  currentAgent String?
+  completedAgents String[]
+  totalAgents  Int         @default(23)
+  error        String?
+  startedAt    DateTime    @default(now())
+  completedAt  DateTime?
+}
+
+enum StudyStatus {
+  RUNNING
+  COMPLETED
+  FAILED
 }
 
 enum Sector {
