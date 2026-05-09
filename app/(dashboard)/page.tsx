@@ -215,7 +215,7 @@ export default function HomePage() {
             <div>
               <h1 className="text-xl font-bold">AfCEN Assistant</h1>
               <p className="text-sm text-muted-foreground mt-1 max-w-md">
-                Tell me what you'd like to do. I can research infrastructure assets,
+                Tell me what you&apos;d like to do. I can research infrastructure assets,
                 run pre-feasibility studies, or help you explore the pipeline.
               </p>
             </div>

@@ -48,7 +48,7 @@ ${dimensions.map((d) => `${d}:\n  Low (1-3): ${RUBRICS[d].low}\n  Mid (4-6): ${R
       prompt: `ASSET: ${asset.name} (${asset.country}, ${asset.sector}, ${asset.capacityMW ?? "N/A"} MW, ${asset.status})
 
 TIER 1 AGENT OUTPUTS:
-${Object.entries(tier1).map(([k, v]) => `\n--- ${v.agentName} (confidence: ${v.confidence}) ---\n${JSON.stringify(v.data, null, 1)}`).join("\n")}
+${Object.entries(tier1).map(([, v]) => `\n--- ${v.agentName} (confidence: ${v.confidence}) ---\n${JSON.stringify(v.data, null, 1)}`).join("\n")}
 
 TIER 1 SUMMARY:
 ${tier1Summary}
@@ -251,7 +251,7 @@ export async function riskRegisterCompiler(
       prompt: `ASSET: ${asset.name} (${asset.country}, ${asset.subCategory})
 
 ALL TIER 1 OUTPUTS:
-${Object.entries(tier1).map(([k, v]) => `--- ${v.agentName} ---\nConfidence: ${v.confidence}\nData Gaps: ${v.dataGaps.join(", ") || "none"}\nData: ${JSON.stringify(v.data, null, 1)}`).join("\n\n")}
+${Object.entries(tier1).map(([, v]) => `--- ${v.agentName} ---\nConfidence: ${v.confidence}\nData Gaps: ${v.dataGaps.join(", ") || "none"}\nData: ${JSON.stringify(v.data, null, 1)}`).join("\n\n")}
 
 Compile the risk register. Return JSON:
 {
@@ -359,13 +359,13 @@ export async function questionsGenerator(
   const start = Date.now();
   const adapter = getLLMAdapter();
 
-  const gaps = Object.entries(tier1).flatMap(([_key, output]) =>
+  const gaps = Object.entries(tier1).flatMap(([, output]) =>
     output.dataGaps.map((gap: string) => `${output.agentName}: ${gap}`)
   );
 
   const lowConfidence = Object.entries(tier1)
     .filter(([, output]) => output.confidence < 0.6)
-    .map(([key, output]) => `${output.agentName} (confidence: ${output.confidence})`);
+    .map(([, output]) => `${output.agentName} (confidence: ${output.confidence})`);
 
   const data = await adapter.extractStructured(
     {

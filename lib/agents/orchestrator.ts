@@ -151,7 +151,7 @@ export async function runPipeline(
   const warnings: string[] = [];
   const errors: string[] = [];
 
-  for (const [key, output] of Object.entries(tier1)) {
+  for (const [, output] of Object.entries(tier1)) {
     if (output.confidence < 0.3) {
       warnings.push(`${output.agentName}: very low confidence (${output.confidence})`);
     }
