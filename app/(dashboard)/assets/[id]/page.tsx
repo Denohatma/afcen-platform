@@ -5,7 +5,6 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Scorecard } from "@/components/Scorecard";
 import { PathToGo } from "@/components/PathToGo";
-import { ComparablesPanel } from "@/components/ComparablesPanel";
 import { DocumentsSection } from "@/components/DocumentsSection";
 import {
   SECTOR_LABELS,
@@ -92,12 +91,6 @@ export default async function AssetDetailPage({
         <PathToGo actions={asset.pathActions} />
       </section>
 
-      {/* Comparables */}
-      <section>
-        <h2 className="text-lg font-semibold mb-4">Comparables</h2>
-        <ComparablesPanel assetId={asset.id} />
-      </section>
-
       {/* Documents */}
       <section>
         <h2 className="text-lg font-semibold mb-4">Documents</h2>
@@ -118,9 +111,6 @@ export default async function AssetDetailPage({
         <Link href={`/assets/${asset.id}/brief`}>
           <Button>Generate IC Brief</Button>
         </Link>
-        <Button variant="outline" disabled>
-          Compare with...
-        </Button>
         <Button variant="outline" disabled>
           Re-score with AI
         </Button>

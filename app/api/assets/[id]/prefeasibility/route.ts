@@ -8,10 +8,21 @@ export async function POST(
 ) {
   const { id } = await params;
 
-  const asset = await prisma.asset.findUnique({ where: { id } });
+  const asset = await prisma.asset.findUnique({
+    where: { id },
+    include: { documents: true },
+  });
   if (!asset) {
     return NextResponse.json({ error: "Asset not found" }, { status: 404 });
   }
+
+  const documents = asset.documents
+    .filter((d) => d.extractedText)
+    .map((d) => ({
+      filename: d.filename,
+      documentType: d.documentType,
+      extractedText: d.extractedText!,
+    }));
 
   const study = await prisma.preFeasibilityStudy.create({
     data: {
@@ -46,7 +57,8 @@ export async function POST(
             completedAgents: { set: [...(update.completedCount > 0 ? [] : []), update.agent] },
           },
         }).catch(() => {});
-      }
+      },
+      documents
     );
 
     // Store scores in the Asset's DimensionScore records

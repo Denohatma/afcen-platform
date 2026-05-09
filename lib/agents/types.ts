@@ -1,5 +1,13 @@
 import { z } from "zod";
 
+// ─── Document context for uploaded files ───
+
+export interface DocumentContext {
+  filename: string;
+  documentType: string;
+  extractedText: string;
+}
+
 // ─── Core agent types ───
 
 export interface AgentOutput<T = unknown> {

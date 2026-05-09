@@ -1,5 +1,5 @@
 import { getLLMAdapter } from "@/lib/llm/adapter";
-import type { AgentOutput } from "./types";
+import type { AgentOutput, DocumentContext } from "./types";
 import {
   HydrologyOutputSchema,
   TopographyCivilOutputSchema,
@@ -36,7 +36,18 @@ interface AssetProfile {
   region?: string | null;
 }
 
-const SYSTEM_BASE = `You are a domain-specialist agent in the AfCEN Pre-Feasibility Study system. You analyse African infrastructure assets and return ONLY structured JSON. Every field must be sourced from your knowledge — do NOT invent data. If a field is unknown, use null. Include a confidence_overall score (0.0-1.0) reflecting data quality, and list any data_gaps.`;
+const SYSTEM_BASE = `You are a domain-specialist agent in the AfCEN Pre-Feasibility Study system. You analyse African infrastructure assets and return ONLY structured JSON. Source fields from uploaded documents first, then supplement with your knowledge — do NOT invent data. If a field is unknown, use null. Include a confidence_overall score (0.0-1.0) reflecting data quality, and list any data_gaps. When documents are provided, prioritise the information they contain and increase your confidence accordingly.`;
+
+const MAX_DOC_CHARS = 12000;
+
+function documentsBlock(docs: DocumentContext[]): string {
+  if (docs.length === 0) return "";
+  const sections = docs.map((d) => {
+    const text = d.extractedText.slice(0, MAX_DOC_CHARS);
+    return `--- ${d.filename} (${d.documentType}) ---\n${text}`;
+  });
+  return `\n\nUPLOADED DOCUMENTS:\n${sections.join("\n\n")}`;
+}
 
 function profileBlock(asset: AssetProfile): string {
   return `ASSET PROFILE:
@@ -93,11 +104,11 @@ async function runAgent<T>(
 
 // ─── 14 Tier 1 Agents ───
 
-export async function hydrologyAgent(asset: AssetProfile): Promise<AgentOutput> {
+export async function hydrologyAgent(asset: AssetProfile, docs: DocumentContext[] = []): Promise<AgentOutput> {
   return runAgent(
     "Hydrology Agent",
     "You are the Hydrology Agent. Analyse long-term flow yield, climate variability, climate-change resilience, and sediment regime for hydropower assets.",
-    `${profileBlock(asset)}
+    `${profileBlock(asset)}${documentsBlock(docs)}
 
 Analyse the hydrology of this asset and return JSON:
 {
@@ -117,11 +128,11 @@ Analyse the hydrology of this asset and return JSON:
   );
 }
 
-export async function topographyCivilAgent(asset: AssetProfile): Promise<AgentOutput> {
+export async function topographyCivilAgent(asset: AssetProfile, docs: DocumentContext[] = []): Promise<AgentOutput> {
   return runAgent(
     "Topography & Civil Works Agent",
     "You are the Topography & Civil Works Agent. Analyse site topography, dam/weir/intake/penstock/powerhouse/tailrace condition and remaining useful life.",
-    `${profileBlock(asset)}
+    `${profileBlock(asset)}${documentsBlock(docs)}
 
 Analyse the topography and civil infrastructure and return JSON:
 {
@@ -146,11 +157,11 @@ Analyse the topography and civil infrastructure and return JSON:
   );
 }
 
-export async function electromechanicalAgent(asset: AssetProfile): Promise<AgentOutput> {
+export async function electromechanicalAgent(asset: AssetProfile, docs: DocumentContext[] = []): Promise<AgentOutput> {
   return runAgent(
     "Electromechanical Agent",
     "You are the Electromechanical Agent. Analyse turbines, generators, transformers, switchgear, controls, and balance-of-plant.",
-    `${profileBlock(asset)}
+    `${profileBlock(asset)}${documentsBlock(docs)}
 
 Analyse the electromechanical equipment and return JSON:
 {
@@ -167,11 +178,11 @@ Analyse the electromechanical equipment and return JSON:
   );
 }
 
-export async function transmissionGridAgent(asset: AssetProfile): Promise<AgentOutput> {
+export async function transmissionGridAgent(asset: AssetProfile, docs: DocumentContext[] = []): Promise<AgentOutput> {
   return runAgent(
     "Transmission & Grid Agent",
     "You are the Transmission & Grid Agent. Analyse evacuation capacity, grid integration, and regional power pool access.",
-    `${profileBlock(asset)}
+    `${profileBlock(asset)}${documentsBlock(docs)}
 
 Analyse the transmission and grid connection and return JSON:
 {
@@ -195,12 +206,13 @@ export async function energyYieldAgent(
   asset: AssetProfile,
   hydrology: AgentOutput,
   topography: AgentOutput,
-  electromechanical: AgentOutput
+  electromechanical: AgentOutput,
+  docs: DocumentContext[] = []
 ): Promise<AgentOutput> {
   return runAgent(
     "Energy Yield Agent",
     "You are the Energy Yield Agent. Calculate long-term energy generation using P = η × ρ × g × h × Q. Use upstream agent data for flow, head, and installed capacity.",
-    `${profileBlock(asset)}
+    `${profileBlock(asset)}${documentsBlock(docs)}
 
 UPSTREAM DATA:
 Hydrology: ${JSON.stringify(hydrology.data)}
@@ -223,11 +235,11 @@ Calculate energy yield and return JSON:
   );
 }
 
-export async function demandMarketAgent(asset: AssetProfile): Promise<AgentOutput> {
+export async function demandMarketAgent(asset: AssetProfile, docs: DocumentContext[] = []): Promise<AgentOutput> {
   return runAgent(
     "Demand & Market Agent",
     "You are the Demand & Market Agent. Analyse demand forecasts, load profiles, electrification targets, tariff environment, and regional power pool context.",
-    `${profileBlock(asset)}
+    `${profileBlock(asset)}${documentsBlock(docs)}
 
 Analyse the demand and market context and return JSON:
 {
@@ -247,11 +259,11 @@ Analyse the demand and market context and return JSON:
   );
 }
 
-export async function commercialAgent(asset: AssetProfile): Promise<AgentOutput> {
+export async function commercialAgent(asset: AssetProfile, docs: DocumentContext[] = []): Promise<AgentOutput> {
   return runAgent(
     "Commercial Agent",
     "You are the Commercial Agent. Analyse PPA terms, tariff structure, offtake credit quality, and payment performance.",
-    `${profileBlock(asset)}
+    `${profileBlock(asset)}${documentsBlock(docs)}
 
 Analyse the commercial arrangements and return JSON:
 {
@@ -272,11 +284,11 @@ Analyse the commercial arrangements and return JSON:
   );
 }
 
-export async function regulatoryAgent(asset: AssetProfile): Promise<AgentOutput> {
+export async function regulatoryAgent(asset: AssetProfile, docs: DocumentContext[] = []): Promise<AgentOutput> {
   return runAgent(
     "Regulatory & Permits Agent",
     "You are the Regulatory & Permits Agent. Analyse the regulatory regime, water rights, permits, concession framework, and change-of-control requirements.",
-    `${profileBlock(asset)}
+    `${profileBlock(asset)}${documentsBlock(docs)}
 
 Analyse the regulatory environment and return JSON:
 {
@@ -295,11 +307,11 @@ Analyse the regulatory environment and return JSON:
   );
 }
 
-export async function esgAgent(asset: AssetProfile): Promise<AgentOutput> {
+export async function esgAgent(asset: AssetProfile, docs: DocumentContext[] = []): Promise<AgentOutput> {
   return runAgent(
     "ESG Agent",
     "You are the ESG Agent. Analyse environmental impact, social impact, climate resilience, and IFC PS / AfDB Safeguards compliance.",
-    `${profileBlock(asset)}
+    `${profileBlock(asset)}${documentsBlock(docs)}
 
 Analyse the ESG profile and return JSON:
 {
@@ -322,12 +334,13 @@ Analyse the ESG profile and return JSON:
 export async function carbonAgent(
   asset: AssetProfile,
   esg: AgentOutput,
-  macro: AgentOutput
+  macro: AgentOutput,
+  docs: DocumentContext[] = []
 ): Promise<AgentOutput> {
   return runAgent(
     "Carbon Agent",
     "You are the Carbon Agent. Assess emissions baseline, carbon market eligibility (VCS, Gold Standard, Article 6.4), and indicative carbon revenue.",
-    `${profileBlock(asset)}
+    `${profileBlock(asset)}${documentsBlock(docs)}
 
 UPSTREAM DATA:
 ESG: ${JSON.stringify(esg.data)}
@@ -352,11 +365,11 @@ Analyse carbon market opportunity and return JSON:
   );
 }
 
-export async function comparablesAgent(asset: AssetProfile): Promise<AgentOutput> {
+export async function comparablesAgent(asset: AssetProfile, docs: DocumentContext[] = []): Promise<AgentOutput> {
   return runAgent(
     "Comparables Agent",
     "You are the Comparables Agent. Identify comparable infrastructure transactions in Africa — similar sector, scale, and development stage. Provide per-MW pricing benchmarks and structural analogs.",
-    `${profileBlock(asset)}
+    `${profileBlock(asset)}${documentsBlock(docs)}
 
 Identify the 3-5 nearest comparable transactions and return JSON:
 {
@@ -372,11 +385,11 @@ Identify the 3-5 nearest comparable transactions and return JSON:
   );
 }
 
-export async function macroCountryAgent(asset: AssetProfile): Promise<AgentOutput> {
+export async function macroCountryAgent(asset: AssetProfile, docs: DocumentContext[] = []): Promise<AgentOutput> {
   return runAgent(
     "Macro & Country Agent",
     "You are the Macro & Country Agent. Analyse sovereign rating, FX risk, political stability, and economic context.",
-    `${profileBlock(asset)}
+    `${profileBlock(asset)}${documentsBlock(docs)}
 
 Analyse the macro and country risk context and return JSON:
 {
@@ -396,11 +409,11 @@ Analyse the macro and country risk context and return JSON:
   );
 }
 
-export async function financialAgent(asset: AssetProfile): Promise<AgentOutput> {
+export async function financialAgent(asset: AssetProfile, docs: DocumentContext[] = []): Promise<AgentOutput> {
   return runAgent(
     "Financial Agent",
     "You are the Financial Agent. Analyse financials, capex/opex estimates, and existing debt. Use known project cost data.",
-    `${profileBlock(asset)}
+    `${profileBlock(asset)}${documentsBlock(docs)}
 
 Analyse the financial profile and return JSON:
 {
@@ -424,12 +437,13 @@ export async function modernisationAgent(
   topography: AgentOutput,
   electromechanical: AgentOutput,
   transmission: AgentOutput,
-  esg: AgentOutput
+  esg: AgentOutput,
+  docs: DocumentContext[] = []
 ): Promise<AgentOutput> {
   return runAgent(
     "Modernisation Scope Agent",
     "You are the Modernisation Scope Agent. Synthesise civil, electromechanical, transmission, and ESG findings into a structured modernisation scope with capex envelope.",
-    `${profileBlock(asset)}
+    `${profileBlock(asset)}${documentsBlock(docs)}
 
 UPSTREAM DATA:
 Topography & Civil: ${JSON.stringify(topography.data)}

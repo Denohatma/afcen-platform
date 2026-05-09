@@ -1,6 +1,6 @@
 import * as T1 from "./tier1";
 import * as T2 from "./tier2";
-import type { AgentOutput, Tier1Outputs, Tier2Outputs, PipelineResult } from "./types";
+import type { AgentOutput, DocumentContext, Tier1Outputs, Tier2Outputs, PipelineResult } from "./types";
 
 interface AssetProfile {
   name: string;
@@ -30,11 +30,13 @@ export type ProgressCallback = (update: {
 
 export async function runPipeline(
   asset: AssetProfile,
-  onProgress?: ProgressCallback
+  onProgress?: ProgressCallback,
+  documents?: DocumentContext[]
 ): Promise<PipelineResult> {
   const totalAgents = 23;
   let completedCount = 0;
   const pipelineStart = Date.now();
+  const docs = documents ?? [];
 
   function progress(phase: string, agent: string, status: "running" | "completed" | "failed") {
     if (status === "completed") completedCount++;
@@ -47,36 +49,36 @@ export async function runPipeline(
 
   const [hydrology, topoCivil, emec, transGrid, demandMkt, commercial, regulatory, esg, comparables, macro, financial] =
     await Promise.all([
-      runSafe("Hydrology Agent", () => T1.hydrologyAgent(asset), progress),
-      runSafe("Topography & Civil Agent", () => T1.topographyCivilAgent(asset), progress),
-      runSafe("Electromechanical Agent", () => T1.electromechanicalAgent(asset), progress),
-      runSafe("Transmission & Grid Agent", () => T1.transmissionGridAgent(asset), progress),
-      runSafe("Demand & Market Agent", () => T1.demandMarketAgent(asset), progress),
-      runSafe("Commercial Agent", () => T1.commercialAgent(asset), progress),
-      runSafe("Regulatory Agent", () => T1.regulatoryAgent(asset), progress),
-      runSafe("ESG Agent", () => T1.esgAgent(asset), progress),
-      runSafe("Comparables Agent", () => T1.comparablesAgent(asset), progress),
-      runSafe("Macro & Country Agent", () => T1.macroCountryAgent(asset), progress),
-      runSafe("Financial Agent", () => T1.financialAgent(asset), progress),
+      runSafe("Hydrology Agent", () => T1.hydrologyAgent(asset, docs), progress),
+      runSafe("Topography & Civil Agent", () => T1.topographyCivilAgent(asset, docs), progress),
+      runSafe("Electromechanical Agent", () => T1.electromechanicalAgent(asset, docs), progress),
+      runSafe("Transmission & Grid Agent", () => T1.transmissionGridAgent(asset, docs), progress),
+      runSafe("Demand & Market Agent", () => T1.demandMarketAgent(asset, docs), progress),
+      runSafe("Commercial Agent", () => T1.commercialAgent(asset, docs), progress),
+      runSafe("Regulatory Agent", () => T1.regulatoryAgent(asset, docs), progress),
+      runSafe("ESG Agent", () => T1.esgAgent(asset, docs), progress),
+      runSafe("Comparables Agent", () => T1.comparablesAgent(asset, docs), progress),
+      runSafe("Macro & Country Agent", () => T1.macroCountryAgent(asset, docs), progress),
+      runSafe("Financial Agent", () => T1.financialAgent(asset, docs), progress),
     ]);
 
   // ─── TIER 1: Dependent agents (4 agents, sequential) ───
 
   const energyYield = await runSafe(
     "Energy Yield Agent",
-    () => T1.energyYieldAgent(asset, hydrology, topoCivil, emec),
+    () => T1.energyYieldAgent(asset, hydrology, topoCivil, emec, docs),
     progress
   );
 
   const carbon = await runSafe(
     "Carbon Agent",
-    () => T1.carbonAgent(asset, esg, macro),
+    () => T1.carbonAgent(asset, esg, macro, docs),
     progress
   );
 
   const modernisation = await runSafe(
     "Modernisation Scope Agent",
-    () => T1.modernisationAgent(asset, topoCivil, emec, transGrid, esg),
+    () => T1.modernisationAgent(asset, topoCivil, emec, transGrid, esg, docs),
     progress
   );
 
